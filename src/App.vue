@@ -20,6 +20,17 @@ export default {
     // select visual enviroment: SvG
     const svg = d3.select('#viz');
 
+    const scaleLength = d3.scaleLinear()
+            .domain([0, d3.max(numbers)])
+            .range([0, 600]);
+
+    const scalePos = d3.scaleBand()
+            .domain(d3.range(numbers.length))
+            .range([0, 300])
+            .round(true)
+            .paddingInner(0.05)
+            .paddingOuter(0.05);
+
     //  =========== Creating the BARS  ==============
     // join my data
     const rects = svg.selectAll('rect')
@@ -27,17 +38,6 @@ export default {
       .join('rect');
 
     // update: join()
-    const scaleLength = d3.scaleLinear()
-      .domain([0, d3.max(numbers)])
-      .range([0, 600]);
-
-    const scalePos = d3.scaleBand()
-      .domain(d3.range(numbers.length))
-      .range([0, 300])
-      .round(true)
-      .paddingInner(0.05)
-      .paddingOuter(0.05);
-
     rects
       .attr('x', 20)
       .attr('height', scalePos.bandwidth())
