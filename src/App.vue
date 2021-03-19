@@ -20,6 +20,7 @@ export default {
     // select visual enviroment: SvG
     const svg = d3.select('#viz');
 
+    //  =========== Creating the BARS  ==============
     // join my data
     const rects = svg.selectAll('rect')
       .data(numbers)
@@ -41,7 +42,22 @@ export default {
       .attr('x', 20)
       .attr('height', scalePos.bandwidth())
       .attr('y', (d,i) => scalePos(i) )
-      .attr('width', scaleLength );
+      .attr('width', scaleLength )
+      .attr('fill', '#0a8989');
+
+
+    // ================ Create the text labels ================
+    const labels = svg.selectAll('text')
+      .data(numbers)
+      .join('text');
+
+    labels
+      .text( (d) => d )
+      .attr('x',  scaleLength)
+      .attr('y', (d,i) => scalePos(i) )
+      .attr('dy', scalePos.bandwidth() / 2)
+      .attr('dx', -20)
+
   }
 }
 </script>
