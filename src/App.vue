@@ -31,33 +31,22 @@ export default {
             .paddingInner(0.05)
             .paddingOuter(0.05);
 
-    //  =========== Creating the BARS  ==============
-    // join my data
-    const rects = svg.selectAll('rect')
+    // =============== Create g groups ===============
+    const gs = svg.selectAll('g.bars')
       .data(numbers)
-      .join('rect');
+      .join('g').attr('class','bars');
 
-    // update: join()
-    rects
-      .attr('x', 20)
-      .attr('height', scalePos.bandwidth())
-      .attr('y', (d,i) => scalePos(i) )
-      .attr('width', scaleLength )
-      .attr('fill', '#0a8989');
+    gs.attr('transform', (d, i) => `translate(20, ${scalePos(i)})`);
 
+    gs.append('rect')
+            .attr('fill', '#0a8989')
+            .attr('height', scalePos.bandwidth())
+            .attr('width', scaleLength );
 
-    // ================ Create the text labels ================
-    const labels = svg.selectAll('text')
-      .data(numbers)
-      .join('text');
-
-    labels
-      .text( (d) => d )
-      .attr('x',  scaleLength)
-      .attr('y', (d,i) => scalePos(i) )
-      .attr('dy', scalePos.bandwidth() / 2)
-      .attr('dx', -20)
-
+    gs.append('text')
+            .text( (d) => d )
+            .attr('x', scaleLength)
+            .attr('y', scalePos.bandwidth() / 2 );
   }
 }
 </script>
